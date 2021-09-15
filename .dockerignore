@@ -1,0 +1,8 @@
+dist/
+back/
+front/
+README.md
+Dockerfile*
+.dockerignore
+.git*
+
