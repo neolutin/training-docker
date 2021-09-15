@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+  # sudo docker run --net=cactusnetwork --name cactus-redis -d -v /docker/host/redis:/data redis --appendonly yes
+  redis:
+    image: redis:alpine
+    command: --appendonly yes
+    networks:
+      - cactusnetwork
+    volumes:
+      - "cactusvolume:/data"
+
+  # sudo docker run -d --net=cactusnetwork -p8081:8081 -e REDIS_HOST=cactus-redis neolutin/cactus-back:v1.3
+  back:
+    build:
+      context: .
+      dockerfile: back/Dockerfile
+    image: neolutin/cactus-back:v1.4
+    ports:
+      - "8081:8081"
+    environment:
+      REDIS_HOST: "redis"
+    networks:
+      - cactusnetwork
+
+  # sudo docker run -d  --net=cactusnetwork -p80:80 neolutin/cactus-front:v3.7
+  front:
+    build:
+      context: .
+      dockerfile: front/Dockerfile
+    image: neolutin/cactus-front:v3.8
+    networks:
+      - cactusnetwork
+    ports:
+      - "80:80"
+networks:
+  cactusnetwork:
+volumes:
+  cactusvolume:
+
