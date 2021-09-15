@@ -1,8 +1,7 @@
-FROM node:8.4 AS build
-RUN mkdir hello-world
-COPY . hello-world
-WORKDIR hello-world
+FROM horgix/cactus-builder AS build
+COPY . /src
+WORKDIR /src
 RUN npm install && npm run build
 
 FROM nginx:alpine AS runtime
-COPY --from=build hello-world/dist/ /usr/share/nginx/html/
+COPY --from=build src/dist/ /usr/share/nginx/html/
