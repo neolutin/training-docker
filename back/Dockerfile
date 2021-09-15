@@ -4,4 +4,5 @@ WORKDIR hello-world
 COPY package.json package-lock.json server.js ./
 RUN npm install --production 
 
+ENV REDIS_HOST=cactus-redis
 CMD node ./server.js
