@@ -13,10 +13,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
       with:
-        name: https://github.com/jbonachera/hello-world.git
-        ref: refs/heads/master
+        repository: jbonachera/hello-world
+        ref: master
 
     - name: Build the Docker image
       run: docker build hello-world --file Dockerfile --tag my-image-name:$(date +%s)
