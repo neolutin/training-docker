@@ -20,4 +20,4 @@ jobs:
         path: hello-world
 
     - name: Build the Docker image
-      run: docker build hello-world --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build hello-world --file front/Dockerfile --tag my-image-name:$(date +%s)
