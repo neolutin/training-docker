@@ -19,5 +19,8 @@ jobs:
         ref: master
         path: hello-world
 
-    - name: Build the Docker image
-      run: docker build hello-world --file front/Dockerfile --tag my-image-name:$(date +%s)
+    - name: Build the front OCI image
+      run: docker build hello-world --file front/Dockerfile --tag cactus-front:$(date +%s)
+
+    - name: Build the back OCI image
+      run: docker build hello-world --file back/Dockerfile --tag cactus-back:$(date +%s)
