@@ -9,12 +9,14 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: pull sources
-      run: git pull https://github.com/jbonachera/hello-world.git
+    - uses: actions/checkout@master
+      with:
+        name: https://github.com/jbonachera/hello-world.git
+        ref: refs/heads/master
+
     - name: Build the Docker image
       run: docker build hello-world --file Dockerfile --tag my-image-name:$(date +%s)
