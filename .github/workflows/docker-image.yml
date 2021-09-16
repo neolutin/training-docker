@@ -1,0 +1,26 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+      with:
+        repository: jbonachera/hello-world
+        ref: master
+        path: hello-world
+
+    - name: Build the front OCI image
+      run: docker build hello-world --file front/Dockerfile --tag cactus-front:$(date +%s)
+
+    - name: Build the back OCI image
+      run: docker build hello-world --file back/Dockerfile --tag cactus-back:$(date +%s)
