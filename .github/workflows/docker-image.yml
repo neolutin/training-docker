@@ -6,7 +6,7 @@ on:
   pull_request:
 
 env:
-  TAG: $(date +%s)
+  TAG: v4.0.$GITHUB_RUN_ID
 
 jobs:
 
