@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build:
+  prepare:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,9 +18,56 @@ jobs:
         repository: jbonachera/hello-world
         ref: master
         path: hello-world
-
-    - name: Build the front OCI image
+        
+    - name: Upload a Sources
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        name: hello-world
+        path: .
+  
+  front:
+    runs-on: ubuntu-latest
+    needs: prepare
+    
+    steps:
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v2.0.10
+      with:
+        name: hello-world
+    - name: Docker Login
+      uses: docker/login-action@v1.10.0
+      with:
+        registry: https://hub.docker.com/
+        username: neolutin
+        password: ${{ secrets.DOCKERHUB }}
+        logout: true
+  
+    - name: Build the OCI image
       run: docker build hello-world --file front/Dockerfile --tag cactus-front:$(date +%s)
+  
+    - name: Push the OCI image
+      run: docker push neolutin/cactus-front:$(date +%s)
+  
+  back:
+    runs-on: ubuntu-latest
+    needs: prepare
+    
+    steps:
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v2.0.10
+      with:
+        name: hello-world
+    - name: Docker Login
+      uses: docker/login-action@v1.10.0
+      with:
+        registry: https://hub.docker.com/
+        username: neolutin
+        password: ${{ secrets.DOCKERHUB }}
+        logout: true
+  
+    - name: Build the OCI image
+      run: docker build hello-world --file back/Dockerfile --tag cactus-back:$(date +%s)    
 
-    - name: Build the back OCI image
-      run: docker build hello-world --file back/Dockerfile --tag cactus-back:$(date +%s)
+    - name: Push the OCI image
+      run: docker push neolutin/cactus-back:$(date +%s)
+  
