@@ -5,6 +5,9 @@ on:
     branches: [ master ]
   pull_request:
 
+env:
+  TAG: $(date +%s)
+
 jobs:
 
   prepare:
@@ -41,10 +44,10 @@ jobs:
         logout: true
   
     - name: Build the OCI image
-      run: docker build hello-world --file front/Dockerfile --tag cactus-front:$(date +%s)
-  
+      run: docker build hello-world --file front/Dockerfile --tag cactus-front:${{ env.TAG }}
+
     - name: Push the OCI image
-      run: docker push neolutin/cactus-front:$(date +%s)
+      run: docker push neolutin/cactus-front:${{ env.TAG }}
   
   back:
     runs-on: ubuntu-latest
@@ -58,14 +61,13 @@ jobs:
     - name: Docker Login
       uses: docker/login-action@v1.10.0
       with:
-        registry: https://hub.docker.com/repository/docker/neolutin
         username: neolutin
         password: ${{ secrets.DOCKERHUB }}
         logout: true
   
     - name: Build the OCI image
-      run: docker build hello-world --file back/Dockerfile --tag cactus-back:$(date +%s)    
+      run: docker build hello-world --file back/Dockerfile --tag cactus-back:${{ env.TAG }}
 
     - name: Push the OCI image
-      run: docker push neolutin/cactus-back:$(date +%s)
+      run: docker push neolutin/cactus-back:${{ env.TAG }}
   
