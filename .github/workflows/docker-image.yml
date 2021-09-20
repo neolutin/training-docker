@@ -45,8 +45,8 @@ jobs:
   
     - name: Build the OCI image
       run: |
-        docker build hello-world --file front/Dockerfile --tag cactus-front:${{ env.TAG }}
-        docker tag cactus-front:${{ env.TAG }} cactus-front:latest
+        docker build hello-world --file front/Dockerfile --tag neolutin/cactus-front:${{ env.TAG }}
+        docker tag neolutin/cactus-front:${{ env.TAG }} cactus-front:latest
 
     - name: Push the OCI image
       run: docker push neolutin/cactus-front
@@ -69,9 +69,9 @@ jobs:
   
     - name: Build the OCI image
       run: |
-        docker build hello-world --file back/Dockerfile --tag cactus-back:${{ env.TAG }}
-        docker tag cactus-back:${{ env.TAG }} cactus-back:latest
+        docker build hello-world --file back/Dockerfile --tag neolutin/cactus-back:${{ env.TAG }}
+        docker tag neolutin/cactus-back:${{ env.TAG }} cactus-back:latest
 
     - name: Push the OCI image
-      run: docker push cactus-back
+      run: docker push neolutin/cactus-back
   
