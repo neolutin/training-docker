@@ -36,7 +36,6 @@ jobs:
     - name: Docker Login
       uses: docker/login-action@v1.10.0
       with:
-        registry: https://hub.docker.com/
         username: neolutin
         password: ${{ secrets.DOCKERHUB }}
         logout: true
@@ -59,7 +58,7 @@ jobs:
     - name: Docker Login
       uses: docker/login-action@v1.10.0
       with:
-        registry: https://hub.docker.com/
+        registry: https://hub.docker.com/repository/docker/neolutin
         username: neolutin
         password: ${{ secrets.DOCKERHUB }}
         logout: true
