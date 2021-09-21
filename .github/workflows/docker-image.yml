@@ -50,7 +50,7 @@ jobs:
         docker tag neolutin/cactus-front:latest neolutin/cactus-front:${{ env.MAJOR_VERSION }}
 
     - name: Push the OCI image
-      run: docker push neolutin/cactus-front
+      run: docker push --all-tags neolutin/cactus-front
   
   back:
     runs-on: ubuntu-latest
@@ -75,5 +75,5 @@ jobs:
         docker tag neolutin/cactus-back:latest neolutin/cactus-back:${{ env.MAJOR_VERSION }}
 
     - name: Push the OCI image
-      run: docker push neolutin/cactus-back
+      run: docker push --all-tags neolutin/cactus-back
   
