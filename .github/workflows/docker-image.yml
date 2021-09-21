@@ -6,7 +6,8 @@ on:
   pull_request:
 
 env:
-  TAG: v4.0.${{ github.run_id }}
+  MAJOR_VERSION: v4.0
+  TAG: ${{ env.MAJOR_VERSION }}.${{ github.run_id }}
 
 jobs:
 
@@ -39,17 +40,19 @@ jobs:
     - name: Docker Login
       uses: docker/login-action@v1.10.0
       with:
+        registry: https://hub.docker.com/_/neolutin/cactus-front
         username: neolutin
         password: ${{ secrets.DOCKERHUB }}
         logout: true
   
     - name: Build the OCI image
       run: |
-        docker build hello-world --file front/Dockerfile --tag neolutin/cactus-front:${{ env.TAG }}
-        docker tag neolutin/cactus-front:${{ env.TAG }} neolutin/cactus-front:latest
+        docker build hello-world --file front/Dockerfile --tag cactus-front:${{ env.TAG }}
+        docker tag cactus-front:${{ env.TAG }} cactus-front:latest
+        docker tag cactus-front:${{ env.TAG }} cactus-front:${{ env.MAJOR_VERSION }}
 
     - name: Push the OCI image
-      run: docker push -a neolutin/cactus-front
+      run: docker push neolutin/cactus-front
   
   back:
     runs-on: ubuntu-latest
@@ -69,9 +72,10 @@ jobs:
   
     - name: Build the OCI image
       run: |
-        docker build hello-world --file back/Dockerfile --tag neolutin/cactus-back:${{ env.TAG }}
-        docker tag neolutin/cactus-back:${{ env.TAG }} neolutin/cactus-back:latest
+        docker build hello-world --file back/Dockerfile --tag cactus-back:${{ env.TAG }}
+        docker tag cactus-back:${{ env.TAG }} cactus-back:latest
+        docker tag cactus-back:${{ env.TAG }} cactus-back:${{ env.MAJOR_VERSION }}
 
     - name: Push the OCI image
-      run: docker push -a neolutin/cactus-back
+      run: docker push cactus-back
   
