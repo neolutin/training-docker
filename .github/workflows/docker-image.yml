@@ -7,7 +7,6 @@ on:
 
 env:
   MAJOR_VERSION: v4.0
-  TAG: ${{ env.MAJOR_VERSION }}.${{ github.run_id }}
 
 jobs:
 
@@ -47,9 +46,9 @@ jobs:
   
     - name: Build the OCI image
       run: |
-        docker build hello-world --file front/Dockerfile --tag cactus-front:${{ env.TAG }}
-        docker tag cactus-front:${{ env.TAG }} cactus-front:latest
-        docker tag cactus-front:${{ env.TAG }} cactus-front:${{ env.MAJOR_VERSION }}
+        docker build hello-world --file front/Dockerfile --tag cactus-front:${{ env.MAJOR_VERSION }}.${{ github.run_id }}
+        docker tag cactus-front:${{ env.MAJOR_VERSION }}.${{ github.run_id }} cactus-front:latest
+        docker tag cactus-front:latest cactus-front:${{ env.MAJOR_VERSION }}
 
     - name: Push the OCI image
       run: docker push neolutin/cactus-front
@@ -72,9 +71,9 @@ jobs:
   
     - name: Build the OCI image
       run: |
-        docker build hello-world --file back/Dockerfile --tag cactus-back:${{ env.TAG }}
-        docker tag cactus-back:${{ env.TAG }} cactus-back:latest
-        docker tag cactus-back:${{ env.TAG }} cactus-back:${{ env.MAJOR_VERSION }}
+        docker build hello-world --file back/Dockerfile --tag cactus-back:${{ env.MAJOR_VERSION }}.${{ github.run_id }}
+        docker tag cactus-back:${{ env.MAJOR_VERSION }}.${{ github.run_id }} cactus-back:latest
+        docker tag cactus-back:latest cactus-back:${{ env.MAJOR_VERSION }}
 
     - name: Push the OCI image
       run: docker push cactus-back
