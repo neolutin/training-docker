@@ -33,7 +33,7 @@ jobs:
     
     steps:
     - name: Download a Build Artifact
-      uses: actions/download-artifact@v2.0.10
+      uses: actions/download-artifact@v4.1.7
       with:
         name: hello-world
     - name: Docker Login
@@ -58,7 +58,7 @@ jobs:
     
     steps:
     - name: Download a Build Artifact
-      uses: actions/download-artifact@v2.0.10
+      uses: actions/download-artifact@v4.1.7
       with:
         name: hello-world
     - name: Docker Login
